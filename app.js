@@ -25,6 +25,10 @@ app.use("/classes", classesRoutes);
 app.use("/listings", listingsRoutes);
 app.use("/valuations", valuationsRoutes);
 
+app.get("/", (req, res) => {
+  res.send("Welcome");
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server started on port 3000 ${PORT}`);
