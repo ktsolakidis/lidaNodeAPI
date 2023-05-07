@@ -1,6 +1,6 @@
 {
-  "name": "api",
-  "version": "1.0.0",
+  "name": "kos",
+  "version": "1.00",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -20,5 +20,6 @@
   },
   "engines": {
     "node": "16.15.2"
-  }
+  },
+  "repository": "https://github.com/ktsolakidis/lidaNodeAPI.git"
 }

@@ -19,11 +19,13 @@ const studentsRoutes = require("./routes/students");
 const classesRoutes = require("./routes/classes");
 const listingsRoutes = require("./routes/listings");
 const valuationsRoutes = require("./routes/valuations");
+const temporaryValuationsRoutes = require("./routes/temporaryValuations");
 
 app.use("/students", studentsRoutes);
 app.use("/classes", classesRoutes);
 app.use("/listings", listingsRoutes);
 app.use("/valuations", valuationsRoutes);
+app.use("/temporaryvaluations", valuationsRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome");
