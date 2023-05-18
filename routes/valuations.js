@@ -21,7 +21,7 @@ router.post("/new", async (req, res) => {
     preparation,
   } = req.body;
 
-  const sql = `INSERT INTO valuations (student_id, class_id, date, theory, solved_excercises, methodology, pronunciation, data_translation, general_difficulty, other_difficulty, metadotikotita, preparation) VALUES (${student_id}, ${class_id}, '${date}', ${theory}, ${solved_excercises}, ${methodology}, ${pronunciation}, ${data_translation}, ${general_difficulty}, '${other_difficulty}', ${metadotikotita}, ${preparation})`;
+  const sql = `INSERT INTO valuations (student_id, class_id, date, theory, solved_excercises, methodology, pronunciation, data_translation, general_difficulty, other_difficulty, metadotikotita, preparation) VALUES (${student_id}, ${class_id},current_date(), ${theory}, ${solved_excercises}, ${methodology}, ${pronunciation}, ${data_translation}, ${general_difficulty}, '${other_difficulty}', ${metadotikotita}, ${preparation})`;
 
   await db.query(sql, (err, result) => {
     if (err) throw err;
@@ -33,6 +33,17 @@ router.post("/new", async (req, res) => {
 //All Valuations
 router.get("/all", async (req, res) => {
   const sql = "SELECT * FROM valuations";
+
+  await db.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log("All valuations:", result);
+    res.send(result);
+  });
+});
+
+router.delete("/del/:id", async (req, res) => {
+  const id = req.params.id;
+  const sql = `DELETE FROM valuations WHERE id=${id}`;
 
   await db.query(sql, (err, result) => {
     if (err) throw err;
