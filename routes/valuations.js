@@ -9,7 +9,6 @@ router.post("/new", async (req, res) => {
   const {
     student_id,
     class_id,
-    date,
     theory,
     solved_excercises,
     methodology,
