@@ -10,16 +10,10 @@ const cors = require("cors");
 const app = express();
 app.use(bodyParser.json());
 app.use(compression());
-app.use(
-  cors({
-    origin: "http://127.0.0.1:5500",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: "Content-Type,Authorization",
-  })
-);
+app.use(cors());
 app.use(helmet({ crossOriginResourcePolicy: false }));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 const studentsRoutes = require("./routes/students");
 const classesRoutes = require("./routes/classes");

@@ -1,13 +1,11 @@
-// Create a connection to the MySQL database
-const db = require("mysql2-promise")();
+const mysql = require("mysql2/promise");
 
-db.configure({
+const pool = mysql.createPool({
   host: "database-1.cfuyzohcw40b.us-east-1.rds.amazonaws.com",
   user: "admin",
   password: "3869kT00",
   database: "sys",
+
 });
 
-// Connect to the database
-
-module.exports = db;
+module.exports = pool;

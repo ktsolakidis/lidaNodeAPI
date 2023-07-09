@@ -4,49 +4,55 @@ const db = require("../database");
 
 module.exports = router;
 
-//New valuation
+// New valuation
 router.post("/new", async (req, res) => {
-  const {
-    student_id,
-    class_id,
-    theory,
-    solved_excercises,
-    methodology,
-    pronunciation,
-    data_translation,
-    general_difficulty,
-    other_difficulty,
-    metadotikotita,
-    preparation,
-  } = req.body;
+  try {
+    const {
+      student_id,
+      class_id,
+      theory,
+      solved_excercises,
+      methodology,
+      pronunciation,
+      data_translation,
+      general_difficulty,
+      other_difficulty,
+      metadotikotita,
+      preparation,
+    } = req.body;
 
-  const sql = `INSERT INTO valuations (student_id, class_id, date, theory, solved_excercises, methodology, pronunciation, data_translation, general_difficulty, other_difficulty, metadotikotita, preparation) VALUES (${student_id}, ${class_id},current_date(), ${theory}, ${solved_excercises}, ${methodology}, ${pronunciation}, ${data_translation}, ${general_difficulty}, '${other_difficulty}', ${metadotikotita}, ${preparation})`;
+    const sql = `INSERT INTO valuations (student_id, class_id, date, theory, solved_excercises, methodology, pronunciation, data_translation, general_difficulty, other_difficulty, metadotikotita, preparation) VALUES (${student_id}, ${class_id}, current_date(), ${theory}, ${solved_excercises}, ${methodology}, ${pronunciation}, ${data_translation}, ${general_difficulty}, '${other_difficulty}', ${metadotikotita}, ${preparation})`;
 
-  await db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log("New valuation created:", result);
+    const [result] = await db.query(sql);
     res.send(result);
-  });
+  } catch (error) {
+    console.error("Error executing query:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
-//All Valuations
+// All Valuations
 router.get("/all", async (req, res) => {
-  const sql = "SELECT * FROM valuations";
-
-  await db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log("All valuations:", result);
+  try {
+    const sql = "SELECT * FROM valuations";
+    const [result] = await db.query(sql);
     res.send(result);
-  });
+  } catch (error) {
+    console.error("Error executing query:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
+// Delete a valuation by id
 router.delete("/del/:id", async (req, res) => {
-  const id = req.params.id;
-  const sql = `DELETE FROM valuations WHERE id=${id}`;
+  try {
+    const id = req.params.id;
+    const sql = `DELETE FROM valuations WHERE id=${id}`;
 
-  await db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log("All valuations:", result);
+    const [result] = await db.query(sql);
     res.send(result);
-  });
+  } catch (error) {
+    console.error("Error executing query:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });

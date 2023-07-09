@@ -4,25 +4,28 @@ const db = require("../database");
 
 module.exports = router;
 
-//Create new Listing of Student to a Class
+// Create new Listing of Student to a Class
 router.post("/new", async (req, res) => {
-  const { student_id, class_id, date } = req.body;
-  const sql = `INSERT INTO listings (student_id, class_id, date) VALUES ('${student_id}', '${class_id}', CURRENT_DATE())`;
+  try {
+    const { student_id, class_id, date } = req.body;
+    const sql = `INSERT INTO listings (student_id, class_id, date) VALUES ('${student_id}', '${class_id}', CURRENT_DATE())`;
 
-  await db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log("New listing created:", result);
+    const [result] = await db.query(sql);
     res.send(result);
-  });
+  } catch (error) {
+    console.error("Error executing query:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
-//Get all Listings
+// Get all Listings
 router.get("/all", async (req, res) => {
-  const sql = "SELECT * FROM listings";
-
-  await db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log("All listings:", result);
+  try {
+    const sql = "SELECT * FROM listings";
+    const [result] = await db.query(sql);
     res.send(result);
-  });
+  } catch (error) {
+    console.error("Error executing query:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
